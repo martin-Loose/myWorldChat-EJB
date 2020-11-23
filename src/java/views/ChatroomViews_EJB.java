@@ -22,6 +22,11 @@ public class ChatroomViews_EJB {
     @Inject
     private ChatroomFacadeLocal chatRoomFacade;
 
+    public String joinChat(){
+      
+       System.err.println("chattest: "+selectedChatroom.getId());
+   return "stammtischChat?faces-redirect=true target=\"_blank\""; 
+   }
     public List<Chatroom> getMyList() {
          myList=new ArrayList<>();
         try{
@@ -41,8 +46,9 @@ public class ChatroomViews_EJB {
         return selectedChatroom;
     }
 
-    public void setSelectedChatroom(Chatroom selectedChatroom) {
+    public String setSelectedChatroom(Chatroom selectedChatroom) {
         this.selectedChatroom = selectedChatroom;
+        return "/secured/user/chat/chatRoomDetails?faces-redirect=true";//"/secured/user/userIndex?faces-redirect=true";
     }
     
     
