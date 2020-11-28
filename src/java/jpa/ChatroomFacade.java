@@ -118,5 +118,16 @@ List<Chatroom>myLists=new ArrayList<>();
             return myLists;
     }
     }
+
+    @Override
+    public List<Chatroom> findPublicRooms(boolean isPublic) {
+     List<Chatroom>myLists=new ArrayList<>();
+        try{
+        myLists=em.createNamedQuery("Chatroom.findByIsPublic",Chatroom.class).setParameter("isPublic", true).getResultList();
+        return myLists;
+        }catch(Exception e){
+            return myLists;
+    }
+    }
     
 }

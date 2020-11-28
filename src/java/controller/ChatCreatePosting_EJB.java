@@ -41,7 +41,8 @@ myPosting.setTargetName("all");
 myPosting.setWann(new Date());
 chatMESSAGEFacade.create(myPosting);
 }
-    return null;
+
+    return "blankChatRoom";
 }
     public int getMyID() {
         return myID;

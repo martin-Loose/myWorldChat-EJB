@@ -36,5 +36,6 @@ public interface ChatroomFacadeLocal {
  List<Chatroom> findRoomByThemeContains(String searchString);
  List<Chatroom> findRoomByTheme(String searchString);
  List<Chatroom> findMyCreatedRooms(int  searchID);
- List<Chatroom> findRoomsWhereImIn(int  searchID);//dopped:when window unload -> remove userID from chat (the plan)
+ List<Chatroom> findRoomsWhereImIn(int  searchID);//dropped:when window unload -> remove userID from chat (the plan)
+List<Chatroom> findPublicRooms(boolean  isPublic);
 }

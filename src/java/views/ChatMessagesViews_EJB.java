@@ -8,6 +8,7 @@ package views;
 import entities.Chatmessage;
 import java.util.ArrayList;
 import java.util.List;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import jpa.ChatmessageFacadeLocal;
 import jpa.ChatroomFacadeLocal;
@@ -21,26 +22,52 @@ public class ChatMessagesViews_EJB {
    private List<Chatmessage>thisGlobalRoom;
    private int chatID;
    private int chatTest=0;
+   private String chatName;
    @Inject
    private ChatroomFacadeLocal chatRoomFacade;
    @Inject
 private ChatmessageFacadeLocal chatMessageFacade;
+private String init;
 
-   
     public List<Chatmessage> getThisRoom() {
         thisRoom=new ArrayList<>();
         try{
-        thisRoom=chatMessageFacade.findRoomMessages(chatID);
+            thisRoom=chatMessageFacade.findRoomMessages(chatID);
+        return thisRoom;
+        }catch(NullPointerException np){
         
-        }catch(Exception e){
-            
-    }
+        }
         return thisRoom;
     }
 
     public void setThisRoom(List<Chatmessage> thisRoom) {
         this.thisRoom = thisRoom;
     }
+
+
+    public void senden(){
+    setInit(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("chatName"));
+    setChatID(Integer.parseInt(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("chatID")));
+        printInit();
+    }
+public String printInit(){
+    System.err.println("init: "+getInit());
+    return "newjsf1";
+}
+    public String getInit() {
+        return init;
+    }
+
+    public void setInit(String init) {
+        this.init = init;
+    }
+    
+   public String join(){
+       setChatName(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("chatName"));
+        setChatID(Integer.parseInt(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("chatID")));
+
+       return "blankChatRoom";
+   } 
 
     public int getChatID() {
         return chatID;
@@ -58,20 +85,12 @@ private ChatmessageFacadeLocal chatMessageFacade;
         this.chatTest = chatTest;
     }
 
-    public List<Chatmessage> getThisGlobalRoom() {
-       thisGlobalRoom=new ArrayList<>();
-        try{
-        thisGlobalRoom=chatMessageFacade.findRoomMessages(1);
-        
-        }catch(Exception e){
-            
-    }
-        return thisGlobalRoom;
+    public String getChatName() {
+        return chatName;
     }
 
-    public void setThisGlobalRoom(List<Chatmessage> thisGlobalRoom) {
-        this.thisGlobalRoom = thisGlobalRoom;
+    public void setChatName(String chatName) {
+        this.chatName = chatName;
     }
    
-   
-    }
+}
