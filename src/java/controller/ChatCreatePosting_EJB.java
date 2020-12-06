@@ -42,7 +42,7 @@ myPosting.setWann(new Date());
 chatMESSAGEFacade.create(myPosting);
 }
 
-    return "blankChatRoom";
+    return null;
 }
     public int getMyID() {
         return myID;

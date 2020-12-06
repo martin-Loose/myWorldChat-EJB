@@ -19,11 +19,12 @@ import jpa.ChatroomFacadeLocal;
  */
 public class ChatroomViews_EJB {
 
-    private List<Chatroom> myNewListOfPublicRooms;
-    private List<Chatroom> myNewListOfPrivateRooms;
+    private List<Chatroom> myNewListOfRooms;
+ //   private List<Chatroom> myNewListOfPrivateRooms;
     private String chatName;
     private int chatID;
     private Chatroom selectedChatroom;
+
     @Inject
     private ChatroomFacadeLocal chatroomFacade;
 
@@ -33,33 +34,21 @@ public class ChatroomViews_EJB {
         setSelectedChatroom(chatroomFacade.find(chatID));
     }
 
-    /**
-     * public List<Chatroom> getMyNewListOfPrivateRooms() {
-     * myNewListOfPublicRooms=new ArrayList<>(); try {
-     * myNewListOfPublicRooms=chatroomFacade.findPublicRooms(true); return
-     * myNewListOfPublicRooms; } catch(NullPointerException np) {
-     *
-     * }
-     * return myNewListOfPrivateRooms; }
-*
-     */
-    public void setMyNewListOfPrivateRooms(List<Chatroom> myNewListOfPrivateRooms) {
-        this.myNewListOfPrivateRooms = myNewListOfPrivateRooms;
-    }
+  
 
-    public List<Chatroom> getMyNewListOfPublicRooms() {
-        myNewListOfPublicRooms = new ArrayList<>();
+    public List<Chatroom> getMyNewListOfRooms() {
+        myNewListOfRooms = new ArrayList<>();
         try {
-            myNewListOfPublicRooms = chatroomFacade.findPublicRooms(true);
-            return myNewListOfPublicRooms;
+            myNewListOfRooms = chatroomFacade.findAll();
+            return myNewListOfRooms;
         } catch (NullPointerException np) {
 
         }
-        return myNewListOfPrivateRooms;
+        return myNewListOfRooms;
     }
 
-    public void setMyNewListOfPublicRooms(List<Chatroom> myNewListOfPublicRooms) {
-        this.myNewListOfPublicRooms = myNewListOfPublicRooms;
+    public void setMyNewListOfRooms(List<Chatroom> myNewListOfRooms) {
+        this.myNewListOfRooms = myNewListOfRooms;
     }
 
     public String getInit() {
@@ -96,4 +85,6 @@ public class ChatroomViews_EJB {
         this.chatID = chatID;
     }
 
+    
+    
 }

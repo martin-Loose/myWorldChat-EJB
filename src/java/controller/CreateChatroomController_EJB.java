@@ -6,6 +6,8 @@
 package controller;
 
 import entities.Chatroom;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import jpa.ChatroomFacadeLocal;
 
@@ -17,10 +19,6 @@ import jpa.ChatroomFacadeLocal;
 public class CreateChatroomController_EJB {
     private String chatRoomName;
     private int myID;
-    private Boolean isPublic;
-    private Boolean isClosed;
-    private Boolean isPrivate;
-    private String password;
      private String theme;
     private int zeichen;
     private final int maxZeichen=150;
@@ -38,20 +36,20 @@ public class CreateChatroomController_EJB {
     public void setZeichen(int zeichen) {
         this.zeichen = zeichen;
     }
-    public void createChatroom(){
+    public void createChatroom(int id){
     try{
         if(chatroomFacade.findRoomByName(chatRoomName).isEmpty()){
           Chatroom myRoom=new Chatroom();
-          myRoom.setCreatorID(getMyID());
+          myRoom.setCreatorID(id);
           myRoom.setIsClosed(false);
           myRoom.setTheme(theme);
-          myRoom.setIsPrivate(false);
-          myRoom.setIsPublic(true);
           myRoom.setName(chatRoomName);
-          if(password.length()>0){
-          myRoom.setPassword(getPassword());
-          }
+          myRoom.setIsPublic(true);
+          myRoom.setIsPrivate(false);
           chatroomFacade.create(myRoom);
+               FacesContext.getCurrentInstance().addMessage(null,
+                             new FacesMessage(FacesMessage.SEVERITY_FATAL, "Chatroom created", "Chatroom created"));    
+          
         }
     
     
@@ -76,38 +74,7 @@ public class CreateChatroomController_EJB {
         this.myID = creatorID;
     }
 
-    public Boolean getIsPublic() {
-        return isPublic;
-    }
-
-    public void setIsPublic(Boolean isPublic) {
-        this.isPublic = isPublic;
-    }
-
-    public Boolean getIsClosed() {
-        return isClosed;
-    }
-
-    public void setIsClosed(Boolean isClosed) {
-        this.isClosed = isClosed;
-    }
-
-    public Boolean getIsPrivate() {
-        return isPrivate;
-    }
-
-    public void setIsPrivate(Boolean isPrivate) {
-        this.isPrivate = isPrivate;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
+   
     public String getTheme() {
         return theme;
     }
