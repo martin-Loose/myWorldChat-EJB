@@ -20,11 +20,12 @@ import jpa.ChatroomFacadeLocal;
 public class ChatroomViews_EJB {
 
     private List<Chatroom> myNewListOfRooms;
- //   private List<Chatroom> myNewListOfPrivateRooms;
+    //   private List<Chatroom> myNewListOfPrivateRooms;
     private String chatName;
     private int chatID;
     private Chatroom selectedChatroom;
-
+    private boolean toShow;
+    private String searchString;
     @Inject
     private ChatroomFacadeLocal chatroomFacade;
 
@@ -34,17 +35,29 @@ public class ChatroomViews_EJB {
         setSelectedChatroom(chatroomFacade.find(chatID));
     }
 
-  
-
     public List<Chatroom> getMyNewListOfRooms() {
         myNewListOfRooms = new ArrayList<>();
         try {
-            myNewListOfRooms = chatroomFacade.findAll();
+            if (isToShow() == false) {
+                myNewListOfRooms = chatroomFacade.findAll();
+            } else if (isToShow() == true) {
+                myNewListOfRooms = chatroomFacade.findRoomByNameContains(searchString);
+            }
+
             return myNewListOfRooms;
         } catch (NullPointerException np) {
 
         }
         return myNewListOfRooms;
+    }
+
+    public void findbyStart() {
+        if (getSearchString().isEmpty()) {
+            setToShow(false);
+        } else {
+            setToShow(true);
+        }
+        getMyNewListOfRooms();
     }
 
     public void setMyNewListOfRooms(List<Chatroom> myNewListOfRooms) {
@@ -56,8 +69,8 @@ public class ChatroomViews_EJB {
     }
 
     public void setInit() {
-       
-        System.err.println("init: "+chatID + " : "+chatName);
+
+        System.err.println("init: " + chatID + " : " + chatName);
     }
 
     public Chatroom getSelectedChatroom() {
@@ -85,6 +98,20 @@ public class ChatroomViews_EJB {
         this.chatID = chatID;
     }
 
-    
-    
+    public boolean isToShow() {
+        return toShow;
+    }
+
+    public void setToShow(boolean toShow) {
+        this.toShow = toShow;
+    }
+
+    public String getSearchString() {
+        return searchString;
+    }
+
+    public void setSearchString(String searchString) {
+        this.searchString = searchString;
+    }
+
 }

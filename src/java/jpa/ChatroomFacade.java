@@ -64,7 +64,8 @@ List<Chatroom>myLists=new ArrayList<>();
     public List<Chatroom> findRoomByNameContains(String searchString) {
     List<Chatroom>myLists=new ArrayList<>();
         try{
-        myLists=em.createNamedQuery("Chatroom.findRoomByNameContains",Chatroom.class).setParameter("name", searchString).getResultList();
+        myLists=em.createNamedQuery("Chatroom.findRoomByNameContains",Chatroom.class)
+                .setParameter("searchString", searchString).getResultList();
         return myLists;
         }catch(Exception e){
             return myLists;
